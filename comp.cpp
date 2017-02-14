@@ -23,14 +23,14 @@ using namespace std;
 // comparator for the max_element algorithm.
 bool elemComp(const pair<char, int>& largest, const pair<char, int>& first)
 {
-    return largest.second < first.second;
+	return largest.second < first.second;
 }
 
 int main()
 {
-    //
-    // Data Acquisition
-    //
+	//
+	// Data Acquisition
+	//
 	vector<string> probes;
 	string temp;
 
@@ -55,56 +55,56 @@ int main()
 		}
 	}
 
-    //
-    // SCS Algorithm
-    //
+	//
+	// SCS Algorithm
+	//
 	map<char, int> rptList;     // Keeps track of how many times each letter has appeared.
 	string solution;
 	for (auto itr = probes.begin(); itr != probes.end(); ++itr)
 	{
-	    cerr << *itr << "\t";   // Debug - Prints the current string in the loop.
-	    string skiplist;        // Contains a list of letters that were processed out of order.
+		cerr << *itr << "\t";   // Debug - Prints the current string in the loop.
+		string skiplist;        // Contains a list of letters that were processed out of order.
 		if (itr + 1 == probes.end()) // Base case.
 		{
 			for (char c : *itr)
 			{
-			    if (skiplist.find(c) == string::npos)
-                {
-                    // max_element finds the character that has appeared the most thus far.
-                    char maxC = max_element(rptList.begin(), rptList.end(), elemComp)->first;
-                    while (rptList[c] < rptList[maxC])
-                    {
-                        solution += maxC;
-                        rptList[maxC] = 0;
-                        skiplist += maxC;
-                        maxC = max_element(rptList.begin(), rptList.end(), elemComp)->first;
-                    }
+				if (skiplist.find(c) == string::npos)
+				{
+					// max_element finds the character that has appeared the most thus far.
+					char maxC = max_element(rptList.begin(), rptList.end(), elemComp)->first;
+					while (rptList[c] < rptList[maxC])
+					{
+						solution += maxC;
+						rptList[maxC] = 0;
+						skiplist += maxC;
+						maxC = max_element(rptList.begin(), rptList.end(), elemComp)->first;
+					}
 
-                    solution += c;
-                    rptList[c] = 0;
-                }
+					solution += c;
+					rptList[c] = 0;
+				}
 			}
 			break;
 		}
 
- 		for (char c : *itr)
-        {
-            rptList[c] += 1;
-            cerr << c << rptList[c] << " "; // Debug - Prints the current state of the repeat list.
-        }
+		for (char c : *itr)
+		{
+			rptList[c] += 1;
+			cerr << c << rptList[c] << " "; // Debug - Prints the current state of the repeat list.
+		}
 
 		for (char c : *itr)
 		{
 			if ((itr + 1)->find(c) == string::npos && // If a character in one string cannot be
-                skiplist.find(c) == string::npos)     // found in the next
+			    skiplist.find(c) == string::npos)     // found in the next
 			{
 				char maxC = max_element(rptList.begin(), rptList.end(), elemComp)->first;
  				while (rptList[c] < rptList[maxC])
 				{
 					solution += maxC;
 					rptList[maxC] = 0;
-                    skiplist += maxC;
-                    maxC = max_element(rptList.begin(), rptList.end(), elemComp)->first;
+					skiplist += maxC;
+					maxC = max_element(rptList.begin(), rptList.end(), elemComp)->first;
 				}
 
 				solution += c;
