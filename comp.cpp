@@ -16,38 +16,37 @@
 #include <sstream>
 #include <vector>
 #include <fstream>
-using namespace std;
 
 int main()
 {
 	//
 	// Data Acquisition
 	//
-	vector<string> probes;
-	string temp;
+	std::vector<std::string> strList;
+	std::string temp;
 
-	ifstream compFile ("comp.txt");
+	std::ifstream compFile ("comp.txt");
 	if (compFile.is_open())
 	{
-		while (getline(compFile, temp))
+		while (std::getline(compFile, temp))
 		{
-			probes.push_back(temp);
+			strList.push_back(temp);
 		}
 	}
 	else
 	{
-		stringstream ss;
+		std::stringstream ss;
 
-		cout << "Enter a list of strings separated by spaces." << endl;
-		getline(cin, temp);
+		std::cout << "Enter a list of strings separated by spaces." << std::endl;
+		std::getline(std::cin, temp);
 		ss << temp;
-		while (getline(ss, temp, ' '))
+		while (std::getline(ss, temp, ' '))
 		{
-			probes.push_back(temp);
+			strList.push_back(temp);
 		}
 	}
 
-	cout << endl << "Result: " << scsAlgorithm(probes);
+	std::cout << std::endl << "Result: " << scsAlgorithm(strList);
 
 	return 0;
 }
